@@ -1,0 +1,88 @@
+<div class="book-detail-container">
+  @if (book) {
+    <div class="book-detail">
+      <div class="book-cover-container">
+        @if (book.coverImage) {
+          <img [src]="book.coverImage" alt="Обложка книги {{ book.title }}" class="book-cover">
+        } @else {
+          <div class="cover-placeholder">
+            <span class="placeholder-text">Нет обложки</span>
+          </div>
+        }
+      </div>
+
+      <div class="book-info">
+        <h1 class="book-title">{{ book.title }}</h1>
+
+        <div class="book-meta">
+          <div class="meta-item">
+            <span class="meta-label">Автор</span>
+            <span class="meta-value">{{ book.author }}</span>
+          </div>
+
+          <div class="meta-item">
+            <span class="meta-label">Год издания</span>
+            <span class="meta-value">{{ book.year | date:'yyyy' }}</span>
+          </div>
+
+          <div class="meta-item">
+            <span class="meta-label">Жанр</span>
+            <span class="meta-value">{{ book.genre }}</span>
+          </div>
+
+          @if (book.rating) {
+            <div class="meta-item">
+              <span class="meta-label">Рейтинг</span>
+              <div class="rating-stars">
+                @for (star of getStars(book.rating); track star) {
+                  <span class="star" [class.filled]="star === '★'">★</span>
+                }
+                <span class="rating-value">({{ book.rating | number:'1.1-1' }})</span>
+              </div>
+            </div>
+          }
+
+          @if (book.pages) {
+            <div class="meta-item">
+              <span class="meta-label">Страниц</span>
+              <span class="meta-value">{{ book.pages }}</span>
+            </div>
+          }
+
+          @if (book.language) {
+            <div class="meta-item">
+              <span class="meta-label">Язык</span>
+              <span class="meta-value">{{ book.language }}</span>
+            </div>
+          }
+
+          @if (book.publisher) {
+            <div class="meta-item">
+              <span class="meta-label">Издательство</span>
+              <span class="meta-value">{{ book.publisher }}</span>
+            </div>
+          }
+
+          @if (book.isbn) {
+            <div class="meta-item">
+              <span class="meta-label">ISBN</span>
+              <span class="meta-value">{{ book.isbn }}</span>
+            </div>
+          }
+        </div>
+
+        <div class="book-description">
+          <h3 class="description-title">Описание</h3>
+          <p>{{ book.description }}</p>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="not-found">
+      <h2>Книга не найдена</h2>
+      <p>Запрошенная вами книга не существует или была удалена</p>
+    </div>
+  }
+
+  <a matButton="tonal" routerLink="/">К списку книг</a>
+</div>

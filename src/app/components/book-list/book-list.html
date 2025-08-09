@@ -1,0 +1,41 @@
+<div class="list-action">
+  <app-search  (searchBook)="findBook($event)"></app-search>
+  <button matButton="tonal"  (click)="openBookForm()">Добавить книгу</button>
+</div>
+
+<div class="main-container">
+  <div class="book-container">
+    @for (book of filteredBooks; track book.id) {
+      <mat-card class="book-card" appearance="outlined" >
+        <mat-card-header>
+          <mat-card-title-group>
+            <mat-card-title>"{{ book.title }}"</mat-card-title>
+            <mat-card-subtitle>{{ book.author }}</mat-card-subtitle>
+            <img mat-card-lg-image  src="{{ book.coverImage }}" alt="Фото книги {{ book.title }}" >
+          </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            {{ book.description }}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button matButton (click)="showBookDetails(book)">Подробнее</button>
+        </mat-card-actions>
+        <mat-card-footer class="book-card-footer">
+          <mat-chip-set aria-label="book-genre">
+            <mat-chip>{{ book.genre }}</mat-chip>
+          </mat-chip-set>
+        </mat-card-footer>
+      </mat-card>
+    } @empty {
+      <p>No books found.</p>
+    }
+  </div>
+
+  <div>
+      @if (isOpenForm) {
+        <app-book-form class="book-form" (bookSubmitted)="handleBookSubmit($event)"></app-book-form>
+      }
+  </div>
+</div>

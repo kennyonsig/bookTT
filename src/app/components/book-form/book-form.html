@@ -1,0 +1,169 @@
+<div class="form-container">
+  <form [formGroup]="bookForm" (ngSubmit)="onSubmit()" class="book-form">
+    <div class="form-wrapper">
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>Название книги</mat-label>
+          <input type="text" matInput formControlName="title" id="title">
+          @if (bookForm.get('title')?.invalid && bookForm.get('title')?.touched) {
+            <mat-error>
+              @if (bookForm.get('title')?.errors?.['required']) {
+                <span>Название обязательно</span>
+              }
+              @if (bookForm.get('title')?.errors?.['maxlength']) {
+                <span>Максимальная длина 50 символов</span>
+              }
+            </mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>Автор</mat-label>
+          <input type="text" matInput formControlName="author" id="author">
+          @if (bookForm.get('author')?.touched && bookForm.get('author')?.errors)  {
+            <mat-error>
+              @if (bookForm.get('author')?.errors?.['required']) {
+                <span>Автор обязателен</span>
+              }
+              @if (bookForm.get('author')?.errors?.['maxlength']) {
+                <span>Максимальная длина 100 символов</span>
+              }
+            </mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>Год издания</mat-label>
+          <input matInput formControlName="year" [matDatepicker]="picker">
+          <mat-hint>ДД/ММ/ГГГГ</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          @if (bookForm.get('year')?.invalid && bookForm.get('year')?.touched) {
+            <mat-error>
+              @if (bookForm.get('year')?.errors?.['required']) {
+                <span>Год обязателен</span>
+              }
+            </mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>Жанр</mat-label>
+          <input type="text" matInput id="genre" formControlName="genre">
+          @if (bookForm.get('genre')?.touched && bookForm.get('genre')?.errors)  {
+            <mat-error>
+              @if (bookForm.get('genre')?.errors?.['required']) {
+                <span>Жанр обязателен</span>
+              }
+            </mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>Страниц</mat-label>
+          <input matInput type="number" id="pages" formControlName="pages">
+          @if (bookForm.get('pages')?.touched && bookForm.get('pages')?.errors)  {
+            <mat-error>
+              @if (bookForm.get('pages')?.errors?.['min']) {
+                <span>Минимум 1 страница</span>
+              }
+            </mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>ISBN</mat-label>
+          <input matInput type="text"
+                 id="isbn"
+                 formControlName="isbn" >
+          @if (bookForm.get('isbn')?.touched && bookForm.get('isbn')?.errors)  {
+            <mat-error>
+              @if (bookForm.get('isbn')?.errors?.['minlength']) {
+                <span>Минимум 10 символов</span>
+              }
+              @if (bookForm.get('isbn')?.errors?.['maxlength']) {
+                <span>Максимум 13 символов</span>
+              }
+              @if (bookForm.get('isbn')?.errors?.['pattern']) {
+                <span>Только цифры и дефисы</span>
+              }
+            </mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>Язык</mat-label>
+          <input type="text" matInput id="language" formControlName="language">
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>Издательств</mat-label>
+          <input type="text" matInput id="publisher" formControlName="publisher">
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>Рейтинг (0-5)</mat-label>
+          <input type="number"
+                 matInput
+                 id="rating"
+                 formControlName="rating"
+                 min="0"
+                 max="5"
+                 step="0.1">
+          @if (bookForm.get('rating')?.touched && bookForm.get('rating')?.errors)  {
+            <mat-error>
+              @if (bookForm.get('rating')?.errors?.['min']) {
+                <span>Минимум 0</span>
+              }
+              @if (bookForm.get('rating')?.errors?.['max']) {
+                <span>Максимум 5</span>
+              }
+            </mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="form-group form-group-textarea">
+        <mat-form-field>
+          <mat-label>Описание</mat-label>
+          <textarea type="text"
+                    id="description"
+                    matInput
+                    formControlName="description"
+                    cdkTextareaAutosize
+                    cdkAutosizeMinRows="3"
+                    cdkAutosizeMaxRows="10"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group form-group-url">
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Обложка (URL)</mat-label>
+          <input type="url" matInput id="coverImage" formControlName="coverImage">
+        </mat-form-field>
+      </div>
+      <button aria-label="Add book"
+              matButton="tonal"
+              class="submit-button"
+              type="submit" [disabled]="bookForm.invalid">Добавить книгу</button>
+    </div>
+
+
+  </form>
+</div>
